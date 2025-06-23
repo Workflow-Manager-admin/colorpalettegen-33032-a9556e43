@@ -1,6 +1,19 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import './App.css';
 import PaletteBar from './components/PaletteBar';
+
+/**
+ * Utility to generate a random valid CSS hex color string.
+ * Returns string like "#A1C4E8"
+ */
+function randomHexColor() {
+  // PUBLIC_INTERFACE
+  const hex = "#" + Math.floor(Math.random() * 0xffffff)
+    .toString(16)
+    .padStart(6, "0")
+    .toUpperCase();
+  return hex;
+}
 
 // PUBLIC_INTERFACE
 function App() {
@@ -10,14 +23,20 @@ function App() {
    * 
    * Returns JSX element.
    */
-  // Placeholder palette: 5 colors, none locked
-  const initialPalette = [
-    { hex: '#6366F1', locked: false },
-    { hex: '#F59E42', locked: false },
-    { hex: '#76E8C2', locked: false },
-    { hex: '#E87A41', locked: false },
-    { hex: '#64748B', locked: false }
-  ];
+  // Returns a palette: [{hex:..., locked: false}, ...]
+  const generatePalette = useCallback(() => {
+    return Array.from({ length: 5 }, () => ({
+      hex: randomHexColor(),
+      locked: false,
+    }));
+  }, []);
+
+  // State: palette array (5)
+  const [palette, setPalette] = useState(generatePalette);
+
+  const handleGeneratePalette = () => {
+    setPalette(generatePalette());
+  };
 
   return (
     <div className="app">
@@ -36,14 +55,14 @@ function App() {
 
       <main>
         <div className="container">
-          <div className="hero" style={{gap: 36}}>
+          <div className="hero" style={{ gap: 36 }}>
             <div className="subtitle">Modern Color Palette Generator</div>
-            <h1 className="title" style={{marginBottom: 0}}>Palette Creator</h1>
-            <div className="description" style={{marginBottom: 10, fontWeight: 400 }}>
+            <h1 className="title" style={{ marginBottom: 0 }}>Palette Creator</h1>
+            <div className="description" style={{ marginBottom: 10, fontWeight: 400 }}>
               Generate, lock, copy and save color palettes instantly for your design inspiration.
             </div>
             {/* Palette Bar */}
-            <PaletteBar palette={initialPalette} />
+            <PaletteBar palette={palette} />
             {/* Actions */}
             <div className="actions" style={{
               display: "flex",
@@ -51,7 +70,14 @@ function App() {
               gap: 18,
               flexWrap: "wrap"
             }}>
-              <button className="btn btn-large" style={{fontSize:'1.14rem', minWidth:140}}>
+              <button
+                className="btn btn-large"
+                style={{ fontSize: '1.14rem', minWidth: 140 }}
+                onClick={handleGeneratePalette}
+              >
+                <span role="img" aria-label="shuffle">🔀</span> Generate
+              </button>
+              <button className="btn btn-large" style={{ fontSize: '1.14rem', minWidth: 140, opacity: 0.5, pointerEvents: 'none' }}>
                 <span role="img" aria-label="save">💾</span> Save Palette
               </button>
               {/* Future: <button className="btn" >Upload Image</button> */}
