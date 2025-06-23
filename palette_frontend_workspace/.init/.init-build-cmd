@@ -1,0 +1,4 @@
+{
+    "command": "npm install && npx tsc --noEmit && npm test -- --ci",
+    "working_directory": "/home/kavia/workspace/code-generation/colorpalettegen-33032-a9556e43/palette_frontend_workspace/palette_frontend"
+}

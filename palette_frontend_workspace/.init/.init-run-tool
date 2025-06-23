@@ -1,0 +1,4 @@
+{
+    "command": "PORT=<port> BROWSER=none npm start",
+    "working_directory": "/home/kavia/workspace/code-generation/colorpalettegen-33032-a9556e43/palette_frontend_workspace/palette_frontend"
+}

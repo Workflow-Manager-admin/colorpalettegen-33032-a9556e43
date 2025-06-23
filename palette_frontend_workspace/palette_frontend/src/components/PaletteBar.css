@@ -1,0 +1,37 @@
+.palette-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: stretch;
+  gap: 12px;
+  margin: 32px 0;
+  width: 100%;
+  min-height: 180px;
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (max-width: 700px) {
+  .palette-bar {
+    gap: 7px;
+    min-height: 120px;
+  }
+  .color-block {
+    min-width: 40px;
+    max-width: 80px;
+  }
+}
+
+@media (max-width: 490px) {
+  .palette-bar {
+    flex-wrap: wrap;
+    min-height: unset;
+  }
+  .color-block {
+    margin: 4px 2px;
+    min-width: 35px;
+    max-width: 65px;
+    font-size: 0.85em;
+  }
+}
